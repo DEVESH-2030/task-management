@@ -112,7 +112,7 @@
 - By using `Docker` and `ingnx`
 - url created in linux system as 
 ```
-    sudo nano /etc/hosts   file
+    sudo nano /etc/hosts
 ```
 - And then added `127.0.0.1   task-management.test`
 - After added this ulr then add in .env file URL. `APP_URL=task-management.test `
