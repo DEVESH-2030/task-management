@@ -107,6 +107,18 @@
     BaseRepository, TaskRepository, ProjectRepository
 ```
 
+### Virtual Host
+- I have generated virtual Host for task-management project url
+- By using `Docker` and `ingnx`
+- url created in linux system as 
+```
+    sudo nano /etc/hosts   file
+```
+- And then added `127.0.0.1   task-management.test`
+- After added this ulr then add in .env file URL. `APP_URL=task-management.test `
+- Also create configuration in `Docker/ingnx/sites/taskmanagement.conf`
+
+
 ### Frontend desing and pages layout
 - Created layout
     - Layout directory for wab page layout
