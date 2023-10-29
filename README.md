@@ -1,33 +1,41 @@
-# Google Doc Sheets Management
+# Task Management System
 
 ## Screenshots:
 
-### google sheet
-![image](https://github.com/DEVESH-2030/google-doc-sheets/assets/73014162/e5b6d08b-8c56-406e-8139-22db0d9d7dab)
-
-
 ### web page
-![Alt text](image.png)
+- ![Alt text](<Screenshot from 2023-10-30 01-36-57.png>)
 
-### tooltip/Save Records
-- Save Records button does to save google sheet records in youd database on click
-![Alt text](image-1.png)
+### Save/Create Task
+- ![Alt text](<Screenshot from 2023-10-30 01-31-19.png>)
 
-- After click on Save Records button then response
-![Alt text](image-2.png)
+### Update Task
+- ![Alt text](<Screenshot from 2023-10-30 01-30-45.png>)
 
 ### Delete Button 
 - Delete is use to delete.remove the record from database (soft delete)  and you can see response message also
-- ![Alt text](image-3.png)
+- ![Alt text](<Screenshot from 2023-10-30 01-30-16.png>)
 
 ### Pagination 
-- In pagination only 5 records will show per page (1st page)
-![Alt text](image-4.png)
+- In pagination only 10 records will show per page (1st page)
+- ![Alt text](<Screenshot from 2023-10-30 01-42-42.png>)
 
 - 2nd page
-![Alt text](image-5.png)
+- ![Alt text](<Screenshot from 2023-10-30 01-43-25.png>)
 
+### Task validations
+- ![Alt text](<Screenshot from 2023-10-30 01-47-19.png>)
+
+
+### Projet Section
+![Alt text](<Screenshot from 2023-10-30 01-45-34.png>)
+
+- List of all projects page not designed
 - New edit button is not working right now
+- Delete project page is not desined
+
+### Project validation
+![Alt text](<Screenshot from 2023-10-30 01-48-05.png>)
+
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
@@ -44,94 +52,20 @@
 - Create a laravel project using this command
 ```
     - Laravel project
-    composer create-project laravel/laravel google-doc-sheets
-
-    - google sheet package
-    composer require revolution/laravel-google-sheets
+    composer create-project laravel/laravel task-management
 ```
 
-- Run php artisan vendor:publish --tag="google-config" to publish the google config file
-```
-    - config/google.php
-
-    - OAuth
-    'client_id'        => env('GOOGLE_CLIENT_ID', ''),
-    'client_secret'    => env('GOOGLE_CLIENT_SECRET', ''),
-    'redirect_uri'     => env('GOOGLE_REDIRECT', ''),
-    'scopes'           => [\Google\Service\Sheets::DRIVE, \Google\Service\Sheets::SPREADSHEETS],
-    'access_type'      => 'online',
-    'approval_prompt'  => 'auto',
-    'prompt'           => 'consent', //"none", "consent", "select_account" default:none
-```
-
-### or Service Account
-- 'file'    => storage_path('credentials.json'),
-- 'enable'  => env('GOOGLE_SERVICE_ENABLED', true),
-
-### Get API Credentials from https://developers.google.com/console
-- Enable Google Sheets API, Google Drive API.
-
-### Configure .env as needed
-```
-    GOOGLE_API_KEY=
-    GOOGLE_REDIRECT=
-    GOOGLE_SHEET_ID=
-    GOOGLE_CLIENT_ID=
-    GOOGLE_CLIENT_SECRET=
-    GOOGLE_DEVELOPER_KEY=
-    GOOGLE_SERVICE_ENABLED=
-    GOOGLE_APPLICATION_NAME=
-    GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION=
-
-```
-
-- Then go to google sheet and create a sheet with some records as well
-
-## Setup Google Doc Sheet 
-
-- Created a laravel project as: google-doc-sheet 
-- Generated laravel key: php artisan key:generate
-- Modify the users table migration file as: first_name, last_name, and email
-- Run laravel migration command
-- Install google apiclient: composer require google/apiclient
-- Install: composer require guzzlehttp/guzzle
-
-### Go to google cloud 
-- API & Services page
-- click on Enable APIs and services (google sheet, google Drive)
-- Open API Library page then I have selecte Google Sheet API option
-- Do Google sheet enable option
-
-### Go to Create Credential of google sheet
-- Select in drop down Google Sheet API
-- I choose User data
-- Proceed to Next
-
-### OAuth Consent Screen
-- Set App name
-- Give user csupport email: bit.devesh2030@gmail.com
-- Save and continue
-
-### Install google sheet package 
-- follpw 
-```
-    composer require revolution/laravel-google-sheets
-```
-- Set up google credential like Client id, client secret key
-- Set Google Servie enable as true
-- Set credential in config/google file
-- I have created a vertual host to run this project, because i am using docker in my system
-	
-### set configuration file : 
-- follow as: 
-    ```
-    php artisan vendor:publish --tag="google-config" 
-    ```
-# After the all setup then start the implementation of code
-# Added Tooltip on button using bootstrap 5
+# Using bootstrap 5 for designing 
 
 ### Database setup
-- Created a database as `google_sheet`
+- Created a database as `task_management`
+- Create Project migration schema file with all
+- Create task migration schema file
+```
+    php artisan make:model Project --all
+    php artisan make:model Task --all
+```
+- Stored default one record for user, project, adn task as well using seeder
 - Run migration
 - please follow as:
 ```
@@ -139,7 +73,7 @@
 
     composer dump-autoload
 
-    php artisan key:gemerate
+    php artisan key:generate
 
     php artisan optimize:clear
 
@@ -147,22 +81,40 @@
 
     php artisan congig:clear
 
-    php artisan migrate
+    php artisan migrate:fresh --seed
 ```
-- I have used `users` to store my google sheet records
+
+- I have used `users` table to store my users records
+- `In this table have created column as: first_name, last_name, email, password, email_verify_at, created_at, updated_at, deleted_at`
+- I have used `tasks` table to store my task records
+- `In this table have created column as: name, priority, project_id, order, created_at, updated_at, deleted_at`
+- I have used `projects` table to store my project records
+- `In this table have created column as: name, created_at, updated_at, deleted_at`
 - Added soft deletes feature
-- In this table have created column as: first_name, last_name, email, password, email_verify_at, created_at, updated_at, deleted_at
 
 ### Pagination
-- Added pagination by using $user->links()
+- Added pagination by using $tasks->links()
 - Bind Paginator bootstrap fine in AppService Provider file
 
 ### Used Service/ Repository pattern
 - Created Internal servies
 - created external services
-- create model based repository file and base repository file
+```
+    TaskService, ProjectSerice
+```
+- create model based repository file and baseRepository file
+```
+    BaseRepository, TaskRepository, ProjectRepository
+```
 
+### Frontend desing and pages layout
+- Created layout
+    - Layout directory for wab page layout
+        - app, app-style (for CSS), app-js (for JavaScript), header, and response-messages 
+    - Project directory for project section pages, Task Directory for task section pages `balde template engine`
+        - as: Index, create, edit,
   
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
